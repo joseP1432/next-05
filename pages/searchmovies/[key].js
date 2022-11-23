@@ -109,7 +109,8 @@ async function theFetcher(url) {
 
 export function TheMovies({ data, show }) {
     if (!show) return (<div></div>)
-    if (data.error) return (<div>falha na requisição</div>)
+    if (data.error) return (<div>Falha na requisição</div>)
+    if (data.Error) return (<div><h1>Filme não encontrado.</h1></div>)
     if (data.Search === '') return (<div> <Button type="primary" size="small" loading> Carregando...</Button></div>)
     return (
         <div className="table-responsive" style={{ marginLeft: '1rem' }}>

@@ -11,7 +11,8 @@ export default function Movies3() {
     //const router = useRouter();
     const { id } = useRouter().query;
     const { data, error } = useSWR(`https://www.omdbapi.com/?apikey=fe65a93e&i=` + id, fetcher);
-    if (error) return <div>falha na requisição...</div>
+    if (error) return <div>Falha na requisição...</div>
+    if (data.Error) return (<div>Falha na pesquisa</div>)
     if (!data) return <div>carregando...</div>
 
     return (

@@ -97,8 +97,7 @@ class NameForm extends React.Component {
     render() {
         return (
             <form className="form-inline" onSubmit={this.handleSubmit}>
-            <label className="sr-only" htmlFor="inlineFormInputName2">Título</label>
-            <input type="text" className="form-control mb-2 mr-sm-2" value={this.state.value} onChange={this.handleChange} placeholder="Digite o título..."/>
+            <input type="text" className="form-control mb-2 mr-sm-2" value={this.state.value} onChange={this.handleChange} placeholder="Digite o título..." required/>
             <button type="submit" className="btn btn-primary mb-2">Buscar</button>
           </form>
         );
