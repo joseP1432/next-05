@@ -2,7 +2,7 @@
   "name": "next-05",
   "version": "1.0.0",
   "description": "",
-  "main": "movies3.js",
+  "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "test": "echo \"Error: no test specified\" && exit 1"

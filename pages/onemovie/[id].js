@@ -102,7 +102,7 @@ export function Home() {
     return (
         <div>
             <Space>
-                <Button ghost href="../movies3"> <HomeOutlined /> </Button>
+                <Button ghost href="../"> <HomeOutlined /> </Button>
             </Space>
         </div>
     )

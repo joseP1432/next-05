@@ -146,7 +146,7 @@ export function Home() {
     return (
         <div style={{ marginLeft: '2rem' }}>
             <Space>
-                <Button ghost href="../movies3"> <HomeOutlined /> </Button>
+                <Button ghost href="../"> <HomeOutlined /> </Button>
             </Space>
         </div>
     )
