@@ -1,18 +1,25 @@
-import { HomeOutlined } from '@ant-design/icons';
-import { Button, Space } from 'antd';
+import useSWR from 'swr'
+import { useRouter } from 'next/router'
+import { HomeOutlined, SearchOutlined, FileSearchOutlined} from '@ant-design/icons';
+import { Button, Space, Layout, Menu } from 'antd';
+import 'antd/dist/reset.css';
 import React from 'react';
 import Head from 'next/head'
-import { Layout, Menu } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 
 export default function Movies3() {
+    //const router = useRouter();
+    const { id } = useRouter().query;
+    const { data, error } = useSWR(`https://www.omdbapi.com/?apikey=fe65a93e&i=` + id, fetcher);
+    if (error) return <div>Falha na requisição...</div>
+    if (!data) return <div>carregando...</div>
+
     return (
         <div>
-            <div> <Head>
-                <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/54/54481.png" type="image/x-icon"></link>
-                <title> Pesquisar </title>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
-            </Head> </div>
+            <Head>
+                <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/149/149286.png" type="image/x-icon"></link>
+                <title> My Page </title>
+            </Head>
             <Layout>
                 <Sider
                     breakpoint="lg"
@@ -39,6 +46,16 @@ export default function Movies3() {
                                 icon: <Home />,
                                 label: '',
                             },
+                            {
+                                key: '3',
+                                icon: <Pesquisa1 />,
+                                label: '',
+                            },
+                            {
+                                key: '4',
+                                icon: <Pesquisa2 />,
+                                label: '',
+                            },
                         ]}
                     />
                 </Sider>
@@ -46,7 +63,7 @@ export default function Movies3() {
                     <Header
                         className="site-layout-sub-header-background"
                         style={{
-                            padding: 10,
+                            padding: 0,
                         }}
                     />
                     <Content
@@ -61,7 +78,10 @@ export default function Movies3() {
                                 minHeight: 480,
                             }}
                         >
-                            <NameForm />
+                            <div style= {{textAlign: 'center'}}>
+                                <img src={data.Poster}></img> <br /> <br />
+                                <h1> {data.Title} </h1> <h2> {data.Year} </h2>
+                            </div>
                         </div>
                     </Content>
                     <Footer
@@ -77,38 +97,37 @@ export default function Movies3() {
     )
 }
 
-class NameForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { value: '' };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
-    handleSubmit(event) {
-        window.open("/searchmovies/" + this.state.value, '_self');
-        event.preventDefault();
-    }
-
-    render() {
-        return (
-            <form className="form-inline" onSubmit={this.handleSubmit}>
-                <input type="text" className="form-control mb-2 mr-sm-2" value={this.state.value} onChange={this.handleChange} placeholder="Digite o título..." required />
-                <button type="submit" className="btn btn-primary mb-2">Buscar</button>
-            </form>
-        );
-    }
+async function fetcher(url) {
+    const res = await fetch(url);
+    const json = await res.json();
+    return json;
 }
 
 export function Home() {
     return (
-        <div style={{ marginLeft: '2rem' }}>
+        <div>
             <Space>
-                <Button ghost href="../"> <HomeOutlined /> </Button>
+                <Button ghost href="../movies33"> <HomeOutlined /> </Button>
+            </Space>
+        </div>
+    )
+}
+
+export function Pesquisa1() {
+    return (
+        <div>
+            <Space>
+                <Button ghost href="../movies34"> <SearchOutlined /> </Button>
+            </Space>
+        </div>
+    )
+}
+
+export function Pesquisa2() {
+    return (
+        <div>
+            <Space>
+                <Button ghost href="../movies35"> <FileSearchOutlined /> </Button>
             </Space>
         </div>
     )

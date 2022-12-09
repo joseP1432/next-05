@@ -1,20 +1,22 @@
 import useSWR from 'swr'
-import {useState} from 'react'
-import { Button, Space } from 'antd';
-import { DownOutlined, UpOutlined, SearchOutlined } from '@ant-design/icons';
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { FileSearchOutlined, SearchOutlined, HomeOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
+import 'antd/dist/reset.css';
+import { Button, Space, Layout, Menu } from 'antd';
 import React from 'react';
 import Head from 'next/head'
-import { Layout, Menu } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 
-
 export default function Movies3() {
+    //const router = useRouter();
+    const { key } = useRouter().query;
     const [url, setUrl] = useState('')
     const { data, error } = useSWR(url, theFetcher)
 
     const onClickHandler = (e) => {
         e.preventDefault()
-        if (url === '') setUrl('https://www.omdbapi.com/?apikey=fe65a93e&s=wonder')
+        if (url === '') setUrl('https://www.omdbapi.com/?apikey=fe65a93e&s=' + key)
         else setUrl('')
     }
 
@@ -23,7 +25,6 @@ export default function Movies3() {
             <Head>
                 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/149/149286.png" type="image/x-icon"></link>
                 <title> My Page </title>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
             </Head>
             <Layout>
                 <Sider
@@ -48,17 +49,22 @@ export default function Movies3() {
                             },
                             {
                                 key: '2',
-                                icon: <Pesquisa />,
+                                icon: <Home />,
                                 label: '',
                             },
                             {
                                 key: '3',
-                                icon: <TheLink url={url} handler={onClickHandler} />,
+                                icon: <Pesquisa1 />,
                                 label: '',
                             },
                             {
                                 key: '4',
-                                icon: <Receita6 />,
+                                icon: <Pesquisa2 />,
+                                label: '',
+                            },
+                            {
+                                key: '5',
+                                icon: <TheLink url={url} handler={onClickHandler} />,
                                 label: '',
                             },
                         ]}
@@ -68,7 +74,7 @@ export default function Movies3() {
                     <Header
                         className="site-layout-sub-header-background"
                         style={{
-                            padding: 10,
+                            padding: 0,
                         }}
                     />
                     <Content
@@ -123,9 +129,10 @@ export function TheMovies({ data, show }) {
                 </thead>
                 <tbody>
                     {data.Search.map((m) => <tr>
-                        <td align='center'><a key={m.imdbID} href={"/onemovie/" + m.imdbID}><img src={m.Poster} width="40%"/></a></td>
-                        <td align='center'><a key={m.imdbID} href={"/onemovie/" + m.imdbID}>{m.Title}</a></td>
-                        <td align='center'><a key={m.imdbID} href={"/onemovie/" + m.imdbID}>{m.Year}</a></td></tr>)}
+                        <td align='center'><a key={m.imdbID} href={"../onemovie/" + m.imdbID}><img src={m.Poster} width="40%" /></a></td>
+                        <td align='center'><a key={m.imdbID} href={"../onemovie/" + m.imdbID}>{m.Title} </a></td>
+                        <td align='center'><a key={m.imdbID} href={"../onemovie/" + m.imdbID}>{m.Year}</a></td>
+                    </tr>)}
                 </tbody>
             </table>
         </div>
@@ -142,21 +149,31 @@ export function TheLink({ url, handler }) {
     )
 }
 
-export function Pesquisa() {
+export function Home() {
     return (
         <div style={{ marginLeft: '2rem' }}>
             <Space>
-                <Button ghost href="movies4"> <SearchOutlined /> </Button>
+                <Button ghost href="../movies33"> <HomeOutlined /> </Button>
             </Space>
         </div>
     )
 }
 
-export function Receita6() {
+export function Pesquisa1() {
     return (
         <div style={{ marginLeft: '2rem' }}>
             <Space>
-                <Button ghost href="/receita6/movies33"> Receita 6</Button>
+                <Button ghost href="../movies34"> <FileSearchOutlined /> </Button>
+            </Space>
+        </div>
+    )
+}
+
+export function Pesquisa2() {
+    return (
+        <div style={{ marginLeft: '2rem' }}>
+            <Space>
+                <Button ghost href="../movies35"> <SearchOutlined /> </Button>
             </Space>
         </div>
     )

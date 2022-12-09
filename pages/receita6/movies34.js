@@ -1,8 +1,7 @@
-import { HomeOutlined } from '@ant-design/icons';
-import { Button, Space } from 'antd';
+import { HomeOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Space, Layout, Menu } from 'antd';
 import React from 'react';
 import Head from 'next/head'
-import { Layout, Menu } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 
 export default function Movies3() {
@@ -37,6 +36,11 @@ export default function Movies3() {
                             {
                                 key: '2',
                                 icon: <Home />,
+                                label: '',
+                            },
+                            {
+                                key: '3',
+                                icon: <Pesquisa2 />,
                                 label: '',
                             },
                         ]}
@@ -108,7 +112,17 @@ export function Home() {
     return (
         <div style={{ marginLeft: '2rem' }}>
             <Space>
-                <Button ghost href="../"> <HomeOutlined /> </Button>
+                <Button ghost href="/movies33"> <HomeOutlined /> </Button>
+            </Space>
+        </div>
+    )
+}
+
+export function Pesquisa2() {
+    return (
+        <div style={{ marginLeft: '2rem' }}>
+            <Space>
+                <Button ghost href="movies35"> <SearchOutlined /> </Button>
             </Space>
         </div>
     )
